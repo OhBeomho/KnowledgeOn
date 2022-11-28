@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+
+* {
+	font-family: "Nanum Gothic", sans-serif;
+}
+
+:root {
+	--primary: rgb(40, 40, 40);
+	--secondary: rgb(80, 80, 80);
+}
+
+html,
+body {
+	margin: 0;
+}
+
+body {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+nav {
+	padding: 10px 30px;
+	background-color: var(--primary);
+	color: white;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+nav .brand {
+	font-size: 30px;
+}
+
+nav a {
+	color: white;
+}
+
+main {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 50px 0;
+	max-width: 700px;
+	width: 90%;
+	margin: auto;
+}
+
+footer {
+	background-color: lightgray;
+	color: gray;
+	text-align: center;
+}
+
+footer p {
+	margin: 5px 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+button {
+	outline: none;
+	padding: 4px;
+	margin: 2px;
+	background-color: var(--primary);
+	border: 0;
+	color: white;
+}
+
+button:hover {
+	background-color: var(--secondary);
+}
+
+button:active {
+	background-color: rgb(120, 120, 120);
+}
+
+input {
+	outline: none;
+	padding: 4px;
+	margin: 2px;
+	border: 1px solid var(--primary);
+}
+
+select {
+	appearance: none;
+	outline: none;
+	background-image: url(../images/select_arrow_image.png);
+	background-repeat: no-repeat;
+	background-position: right;
+	background-size: 20px;
+	padding: 4px;
+	margin: 2px;
+	border: 1px solid var(--primary);
+}
+
+textarea {
+	outline: none;
+	resize: none;
+	padding: 4px;
+	margin: 2px;
+	border: 1px solid var(--primary);
+}

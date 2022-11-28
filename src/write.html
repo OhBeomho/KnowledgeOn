@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>지식 ON</title>
+		<link rel="stylesheet" href="css/main.css" />
+	</head>
+	<body>
+		<nav>
+			<a href="/" class="brand">지식 ON</a>
+			<div>
+				<a href="/write">질문하기</a>
+				<a href="/account">계정</a>
+			</div>
+		</nav>
+		<main>
+			<h1>질문하기</h1>
+			<form action="/write" method="post" style="text-align: center">
+				<p>질문 제목 <input type="text" name="title" /></p>
+				<p>
+					질문 내용<br />
+					<textarea name="content" cols="30" rows="10"></textarea>
+				</p>
+				<p>
+					<button type="submit">질문하기</button>
+				</p>
+			</form>
+		</main>
+		<footer>
+			<p>Made by OhBeomho</p>
+			<p>Source on <a href="https://github.com/OhBeomho/KnowledgeOn">Github</a>.</p>
+		</footer>
+	</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>지식 ON</title>
+		<link rel="stylesheet" href="css/main.css" />
+		<style>
+			ul#question_list {
+				list-style: none;
+				padding: 0;
+				width: 100%;
+			}
+
+			.question {
+				padding: 5px;
+				width: calc(100% - 10px);
+				text-align: left;
+			}
+
+			.question:hover {
+				box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
+			}
+
+			.question a {
+				color: inherit;
+				width: 100%;
+				display: flex;
+			}
+
+			.question a:hover {
+				text-decoration: none;
+			}
+
+			.question div {
+				padding: 0 5px;
+			}
+
+			main {
+				text-align: center;
+			}
+
+			main article {
+				width: 700px;
+			}
+		</style>
+	</head>
+	<body>
+		<nav>
+			<a href="/" class="brand">지식 ON</a>
+			<div>
+				<a href="/write">질문하기</a>
+				<a href="/account">계정</a>
+			</div>
+		</nav>
+		<main>
+			<article>
+				<h1>지식 ON</h1>
+				<p>질문을 올리거나 질문에 답변하여 지식을 키워나가세요!</p>
+				<hr />
+				<div style="display: flex; justify-content: space-between">
+					<select id="filter" onchange="filter()">
+						<option value="all" selected>모든 질문</option>
+						<option value="chose">답변이 채택된 질문</option>
+						<option value="not_chosen">답변이 채택되지 않은 질문</option>
+					</select>
+					<div>
+						<input type="search" id="search_input" />
+						<button type="button" onclick="search()">검색</button>
+						<button type="button" onclick="reset_search()">검색 초기화</button>
+					</div>
+				</div>
+			</article>
+			<article>
+				<ul id="question_list">
+					<% if (question_list.length > 0) { %> <% for (let question of question_list) { %>
+					<!-- data-title for searching -->
+					<li class="question" data-title="<%= question.title %>" data-chose="<%= question.chose %>">
+						<a href="/read/<%= question.id %>">
+							<div>답변 <%= question.answers.length %>개</div>
+							<div style="flex: 1; font-weight: bold"><%= question.title %></div>
+							<div><%= question.writer_id %></div>
+							<div style="color: gray"><%= question.write_date %></div>
+						</a>
+					</li>
+					<% }} else { %>
+					<div id="no_questions">질문이 없습니다.</div>
+					<% } %>
+				</ul>
+				<div>
+					<button type="button" onclick="previous_page()">&larr;</button>
+					<button type="button" onclick="next_page()">&rarr;</button>
+				</div>
+			</article>
+		</main>
+		<footer>
+			<p>Made by OhBeomho</p>
+			<p>Source on <a href="https://github.com/OhBeomho/KnowledgeOn">Github</a>.</p>
+		</footer>
+
+		<script>
+			const page = Number(new URL(location.href).searchParams.get("page")) || 0
+			const question_list = document.querySelector("ul#question_list")
+			const questions = question_list.children
+
+			function previous_page() {
+				if (page !== 0) {
+					if (page - 1 === 0) {
+						location.assign("/")
+					} else {
+						location.assign("/?page=" + (page - 1))
+					}
+				}
+			}
+
+			function next_page() {
+				if (document.querySelector("#no_questions")) {
+					return
+				}
+
+				location.assign("/?page=" + (page + 1))
+			}
+
+			function search() {
+				const search_text = document.querySelector("input#search_input").value
+
+				question_list.innerHTML = ""
+				const result = questions.filter((question) => question.dataset.title.includes(search_text))
+				result.forEach((e) => question_list.appendChild(e))
+				filter()
+			}
+
+			function filter() {
+				search()
+
+				const filter_name = document.querySelector("select#filter").value
+				const current_questions = question_list.children
+
+				if (filter_name === "all") return
+
+				question_list.innerHTML = ""
+				if (filter_name === "chose") {
+					const filtered = current_questions.filter((question) => question.dataset.chose !== -1)
+					filtered.forEach((question) => question_list.appendChild(question))
+				} else if (filter_name === "not_chosen") {
+					const filtered = current_questions.filter((question) => question.dataset.chose === -1)
+					filtered.forEach((question) => question_list.appendChild(question))
+				}
+			}
+		</script>
+	</body>
+</html>
