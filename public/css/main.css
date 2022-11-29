@@ -94,7 +94,7 @@ input {
 select {
 	appearance: none;
 	outline: none;
-	background-image: url(../images/select_arrow_image.png);
+	background-image: url(/images/select_arrow_image.png);
 	background-repeat: no-repeat;
 	background-position: right;
 	background-size: 20px;
