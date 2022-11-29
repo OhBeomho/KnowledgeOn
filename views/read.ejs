@@ -73,10 +73,12 @@
 					<li style="text-align: center">답변이 없습니다.</li>
 					<% } %>
 				</ul>
-				<form action="/answer" method="post" style="display: flex; flex-wrap: wrap">
+				<% if (chose === -1) { %>
+				<form action="/answer/<%= id %>" method="post" style="display: flex; flex-wrap: wrap">
 					<textarea name="content" rows="5" required></textarea>
 					<button type="submit">답변하기</button>
 				</form>
+				<% } %>
 			</article>
 		</main>
 		<footer>

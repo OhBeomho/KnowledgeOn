@@ -256,28 +256,25 @@ app.post("/write", (req, res) => {
 
 			const question_id = result.rows[0].id
 
-			db.query(
-				"UPDATE account SET question_count = question_count + 1 WHERE id = $1",
-				[writer_id],
-				(err, result) => {
-					if (err) {
-						console.error(err.message)
-						res.render("error", { message: "서버에서 오류가 발생했습니다." })
-						return
-					}
-
-					res.redirect("/read/" + question_id)
+			db.query("UPDATE account SET question_count = question_count + 1 WHERE id = $1", [writer_id], (err) => {
+				if (err) {
+					console.error(err.message)
+					res.render("error", { message: "서버에서 오류가 발생했습니다." })
+					return
 				}
-			)
+
+				res.redirect("/read/" + question_id)
+			})
 		}
 	)
 })
-app.post("/answer", (req, res) => {
+app.post("/answer/:id", (req, res) => {
 	if (!req.session.user) {
 		res.render("error", { message: "로그인 되어 있지 않습니다." })
 		return
 	}
 
+	const { id } = req.params
 	const { content } = req.body
 	const write_date = new Date().toLocaleDateString("ko-KR")
 	const writer_id = req.session.user
@@ -293,8 +290,8 @@ app.post("/answer", (req, res) => {
 			}
 
 			db.query(
-				"UPDATE question SET answers = array_append(answers, $1) RETURNING id",
-				[result.rows[0].id],
+				"UPDATE question SET answers = array_append(answers, $1) WHERE id = $2 RETURNING id",
+				[result.rows[0].id, id],
 				(err, result) => {
 					if (err) {
 						console.error(err.message)
