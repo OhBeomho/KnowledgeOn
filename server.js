@@ -49,7 +49,7 @@ app.get("/", (req, res) => {
 
 	const { page = 0 } = req.query
 	db.query(
-		"SELECT id, title, writer_id, write_date, answers, chose FROM question OFFSET $1 LIMIT 20",
+		"SELECT id, title, writer_id, write_date, answers, chose FROM question ORDER BY id DESC OFFSET $1 LIMIT 20",
 		[page * 20],
 		(err, result) => {
 			if (err) {
