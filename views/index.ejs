@@ -101,6 +101,7 @@
 
 		<script>
 			const page = Number(new URL(location.href).searchParams.get("page")) || 0
+			const search_text = document.querySelector("input#search_input").value
 			const question_list = document.querySelector("ul#question_list")
 			const questions = question_list.children
 
@@ -123,8 +124,6 @@
 			}
 
 			function search() {
-				const search_text = document.querySelector("input#search_input").value
-
 				question_list.innerHTML = ""
 				const result = questions.filter((question) => question.dataset.title.includes(search_text))
 				result.forEach((e) => question_list.appendChild(e))
@@ -147,6 +146,11 @@
 					const filtered = current_questions.filter((question) => question.dataset.chose === -1)
 					filtered.forEach((question) => question_list.appendChild(question))
 				}
+			}
+
+			function reset_search() {
+				search_text.value = ""
+				filter()
 			}
 		</script>
 	</body>
