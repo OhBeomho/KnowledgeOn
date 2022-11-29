@@ -1,11 +1,13 @@
 require("dotenv").config()
 
+const { PORT, DB_URL, COOKIE_SECRET } = process.env
+
 const express = require("express")
 const app = express()
 const http = require("http")
 const server = http.createServer(app)
 const { Client } = require("pg")
-const db = new Client(process.env.DB_URL)
+const db = new Client(DB_URL)
 db.connect((err) => {
 	if (err) {
 		console.error(err.message)
@@ -32,7 +34,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(
 	require("express-session")({
-		secret: process.env.COOKIE_SECRET,
+		secret: COOKIE_SECRET,
 		resave: false,
 		saveUninitialized: true
 	})
@@ -321,4 +323,4 @@ app.post("/answer", (req, res) => {
 	)
 })
 
-server.listen(process.env.PORT, () => console.log("Server started. PORT: " + PORT))
+server.listen(PORT, () => console.log("Server started. PORT: " + PORT))
