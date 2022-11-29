@@ -186,6 +186,14 @@ app.get("/read/:id", (req, res) => {
 		})
 	})
 })
+app.get("/write", (req, res) => {
+	if (!req.session.user) {
+		res.render("error", { message: "로그인 되어 있지 않습니다." })
+		return
+	}
+
+	res.render("write.html")
+})
 
 // POST
 app.post("/login", (req, res) => {
