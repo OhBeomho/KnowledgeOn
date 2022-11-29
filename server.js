@@ -321,5 +321,4 @@ app.post("/answer", (req, res) => {
 	)
 })
 
-const PORT = process.env.PORT || 5000
-server.listen(PORT, () => console.log("Server started. PORT: " + PORT))
+server.listen(process.env.PORT, () => console.log("Server started. PORT: " + PORT))
