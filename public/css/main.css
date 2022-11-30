@@ -103,6 +103,7 @@ select {
 	background-position: right;
 	background-size: 20px;
 	padding: 4px;
+	padding-right: 24px;
 	margin: 2px;
 	border: 1px solid var(--primary);
 }

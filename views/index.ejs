@@ -106,9 +106,9 @@
 
 		<script>
 			const page = Number(new URL(location.href).searchParams.get("page")) || 0
-			const search_text = document.querySelector("input#search_input").value
+			const search_text = document.querySelector("input#search_input")
 			const question_list = document.querySelector("ul#question_list")
-			const questions = question_list.children
+			const questions = Array.from(question_list.children)
 
 			function previous_page() {
 				if (page !== 0) {
@@ -130,26 +130,32 @@
 
 			function search() {
 				question_list.innerHTML = ""
+
 				const result = questions.filter((question) => question.dataset.title.includes(search_text.value))
 				result.forEach((e) => question_list.appendChild(e))
+
 				filter()
 			}
 
 			function filter() {
-				search()
+				questions
+					.filter((question) => question.dataset.title.includes(search_text.value))
+					.forEach((question) => question_list.appendChild(question))
 
 				const filter_name = document.querySelector("select#filter").value
-				const current_questions = question_list.children
+				const current_questions = Array.from(question_list.children)
 
 				if (filter_name === "all") return
 
 				question_list.innerHTML = ""
 				if (filter_name === "chose") {
-					const filtered = current_questions.filter((question) => question.dataset.chose !== -1)
+					const filtered = current_questions.filter((question) => question.dataset.chose !== "-1")
 					filtered.forEach((question) => question_list.appendChild(question))
+					console.log(filtered)
 				} else if (filter_name === "not_chosen") {
-					const filtered = current_questions.filter((question) => question.dataset.chose === -1)
+					const filtered = current_questions.filter((question) => question.dataset.chose === "-1")
 					filtered.forEach((question) => question_list.appendChild(question))
+					console.log(filtered)
 				}
 			}
 
