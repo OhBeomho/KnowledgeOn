@@ -130,7 +130,7 @@
 
 			function search() {
 				question_list.innerHTML = ""
-				const result = questions.filter((question) => question.dataset.title.includes(search_text))
+				const result = questions.filter((question) => question.dataset.title.includes(search_text.value))
 				result.forEach((e) => question_list.appendChild(e))
 				filter()
 			}
