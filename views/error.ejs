@@ -5,10 +5,25 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>오류 발생</title>
+	<style>
+		html,
+		body {
+			margin: 0;
+		}
+
+		body {
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+	</style>
 </head>
 <body>
 	<h1 style="color: rgb(200, 0, 0)">Error</h1>
 	<p><%= message %></p>
-	<button onclick="history.back()">확인</button>
+	<button onclick="history.back()">돌아가기</button>
+	<button onclick="location.assign('/')">홈으로</button>
 </body>
 </html>

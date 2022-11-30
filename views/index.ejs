@@ -80,7 +80,7 @@
 						<a href="/read/<%= question.id %>">
 							<div>답변 <%= question.answers.length %>개</div>
 							<div style="flex: 1; font-weight: bold"><%= question.title %></div>
-							<div><%= question.writer_id %></div>
+							<div><%= question.writer_id === "-".repeat(30) ? "[deleted user]" : question.writer_id %></div>
 							<div style="color: gray"><%= question.write_date %></div>
 						</a>
 					</li>

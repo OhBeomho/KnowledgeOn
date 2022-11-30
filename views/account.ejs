@@ -46,11 +46,20 @@
 				</div>
 				<button type="button" onclick="location.assign('/')">홈으로</button>
 				<button type="button" onclick="location.assign('/logout')">로그아웃</button>
+				<button type="button" onclick="delete_account()">계정 삭제</button>
 			</article>
 		</main>
 		<footer>
 			<p>Made by OhBeomho</p>
 			<p>Source on <a href="https://github.com/OhBeomho/KnowledgeOn">Github</a>.</p>
 		</footer>
+
+		<script>
+			function delete_account() {
+				const password = prompt("계정을 삭제하려면 비밀번호를 입력하세요.")
+				if (!password) return
+				location.assign("/delete/" + password)
+			}
+		</script>
 	</body>
 </html>

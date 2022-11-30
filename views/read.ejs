@@ -43,30 +43,41 @@
 		<main>
 			<h1><%= title %></h1>
 			<article style="width: 100%; display: flex; justify-content: space-between">
-				<div><b><%= writer_id %></b></div>
+				<div><b><%= writer_id === "-".repeat(30) ? "[deleted user]" : writer_id %></b></div>
 				<div style="color: gray"><%= write_date %></div>
 			</article>
 			<hr />
 			<article style="margin-bottom: 20px">
 				<div style="white-space: pre-wrap; word-break: break-all"><%= content %></div>
+				<div style="margin-top: 10px; text-align: center">
+					<button type="button" onclick="navigator.clipboard.writeText(location.href)">URL 복사</button>
+					<% if (is_writer) { %>
+					<button type="button" onclick="location.assign('/delete_question/<%= id %>')">삭제</button>
+					<% } %>
+				</div>
 			</article>
 			<h3>답변</h3>
 			<article>
 				<ul id="answer_list">
 					<% if (answers.length > 0) { %> <% for (let answer of answers) { %>
-					<li class="answer" style="margin: auto; margin-bottom: 10px; border-bottom: 1px solid var(--primary)">
+					<li
+						class="answer"
+						style="margin: auto; margin-bottom: 10px; border-bottom: 1px solid var(--primary)"
+					>
 						<div style="display: flex; justify-content: space-between">
 							<div>
-								<b><%= answer.writer_id %></b>
+								<b><%= answer.writer_id === "-".repeat(30) ? "[deleted user]" : answer.writer_id %></b>
 								<% if (chose === answer.id) { %>
 								<b style="color: rgb(170, 0, 0)">질문자 채택</b>
 								<% } %>
 							</div>
 							<div style="color: gray"><%= answer.write_date %></div>
 						</div>
-						<div style="white-space: pre-wrap; word-break: break-all; padding: 5px 0"><%= answer.content %></div>
+						<div style="white-space: pre-wrap; word-break: break-all"><%= answer.content %></div>
 						<% if (is_writer && chose === -1) { %>
-						<button type="button" onclick="location.assign('/choose/<%= id %>/<%= answer.id %>')">답변 채택</button>
+						<button type="button" onclick="location.assign('/choose/<%= id %>/<%= answer.id %>')">
+							답변 채택
+						</button>
 						<% } %>
 					</li>
 					<% }} else { %>

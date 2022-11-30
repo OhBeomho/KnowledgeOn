@@ -7,7 +7,7 @@
     "pg": "^8.8.0"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.mjs"
   },
   "name": "knowledge_on",
   "version": "1.0.0",
