@@ -41,9 +41,16 @@
 			</div>
 		</nav>
 		<main>
+			<% const deleted_user = (id) => id === "-".repeat(30) %>
 			<h1><%= title %></h1>
 			<article style="width: 100%; display: flex; justify-content: space-between">
-				<div><b><%= writer_id === "-".repeat(30) ? "[deleted user]" : writer_id %></b></div>
+				<div>
+					<% if (deleted_user(writer_id)) { %>
+					<b style="color: gray">[deleted user]</b>
+					<% } else { %>
+					<b><%= writer_id %></b>
+					<% } %>
+				</div>
 				<div style="color: gray"><%= write_date %></div>
 			</article>
 			<hr />
@@ -71,8 +78,11 @@
 					>
 						<div style="display: flex; justify-content: space-between">
 							<div>
-								<b><%= answer.writer_id === "-".repeat(30) ? "[deleted user]" : answer.writer_id %></b>
-								<% if (chose === answer.id) { %>
+								<% if (deleted_user(answer.writer_id)) { %>
+								<b style="color: gray">[deleted user]</b>
+								<% } else { %>
+								<b><%= answer.writer_id %></b>
+								<% } %> <% if (chose === answer.id) { %>
 								<b style="color: rgb(170, 0, 0)">질문자 채택</b>
 								<% } %>
 							</div>
