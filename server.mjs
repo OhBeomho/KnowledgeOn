@@ -16,7 +16,7 @@ app.set("view engine", "ejs")
 app.set("views", "views")
 app.engine("html", renderFile)
 
-app.use(express.static("public"))
+app.use(express.static("static"))
 app.use(json())
 app.use(urlencoded({ extended: true }))
 app.use(
