@@ -57,7 +57,7 @@
 			<article style="margin-bottom: 20px">
 				<div style="white-space: pre-wrap; word-break: break-all"><%= content %></div>
 				<div style="margin-top: 10px; text-align: center">
-					<button type="button" onclick="navigator.clipboard.writeText(location.href)">URL 복사</button>
+					<button type="button" onclick="navigator.clipboard.writeText(location.href) && alert('URL 이 복사되었습니다.')">URL 복사</button>
 					<% if (is_writer) { %>
 					<button
 						type="button"
