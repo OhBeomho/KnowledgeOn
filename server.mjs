@@ -33,11 +33,6 @@ function err(res, message) {
 
 // GET
 app.get("/", (req, res) => {
-	if (!req.session.user) {
-		res.redirect("/login")
-		return
-	}
-
 	const { page = 0 } = req.query
 	Question.list(page)
 		.then((question_list) => res.render("index", { question_list }))
@@ -46,6 +41,7 @@ app.get("/", (req, res) => {
 			err(res, "서버에서 오류가 발생했습니다.")
 		})
 })
+
 app.get("/login", (_, res) => res.render("login.html"))
 
 app.get("/sign_up", (_, res) => res.render("signup.html"))
@@ -111,7 +107,10 @@ app.get("/read/:id", (req, res) => {
 	Question.get(req.session.user, id)
 		.then((question_data) => {
 			if (question_data === "NOT_EXISTS") err(res, "존재하지 않는 질문입니다.")
-			else res.render("read", question_data)
+			else {
+				question_data.login = req.session.user !== undefined
+				res.render("read", question_data)
+			}
 		})
 		.catch((error) => {
 			console.log(error)
@@ -152,7 +151,10 @@ app.post("/login", (req, res) => {
 			else if (result === "INCORRECT_PASSWORD") err(res, "비밀번호가 일치하지 않습니다.")
 			else {
 				req.session.user = id
-				res.redirect("/")
+
+				const { qid } = req.query
+				if (qid) res.redirect("/read/" + qid)
+				else res.redirect("/")
 			}
 		})
 		.catch((error) => {

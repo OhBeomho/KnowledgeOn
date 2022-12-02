@@ -41,7 +41,7 @@
 			</div>
 		</nav>
 		<main>
-			<% const deleted_user = (id) => id === "-".repeat(30) %>
+			<% const deleted_user = (user_id) => user_id === "-".repeat(30) %>
 			<h1><%= title %></h1>
 			<article style="width: 100%; display: flex; justify-content: space-between">
 				<div>
@@ -57,7 +57,12 @@
 			<article style="margin-bottom: 20px">
 				<div style="white-space: pre-wrap; word-break: break-all"><%= content %></div>
 				<div style="margin-top: 10px; text-align: center">
-					<button type="button" onclick="navigator.clipboard.writeText(location.href) && alert('URL 이 복사되었습니다.')">URL 복사</button>
+					<button
+						type="button"
+						onclick="navigator.clipboard.writeText(location.href) && alert('URL 이 복사되었습니다.')"
+					>
+						URL 복사
+					</button>
 					<% if (is_writer) { %>
 					<button
 						type="button"
@@ -99,11 +104,43 @@
 					<li style="text-align: center">답변이 없습니다.</li>
 					<% } %>
 				</ul>
-				<% if (chose === -1) { %>
+				<% if (chose === -1 && login && !is_writer) { %>
 				<form action="/answer/<%= id %>" method="post" style="display: flex; flex-wrap: wrap">
 					<textarea name="content" rows="5" required></textarea>
 					<button type="submit">답변하기</button>
 				</form>
+				<% } else if (!login && !is_writer) { %>
+				<p style="text-align: center; margin-top: 20px">
+					로그인 후 답변할 수 있습니다.<br />
+					<button onclick="document.querySelector('dialog').showModal()">로그인하기</button>
+				</p>
+				<dialog style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; text-align: center">
+					<h2>로그인</h2>
+					<form action="/login?qid=<%= id %>" method="post">
+						<table>
+							<tr>
+								<td>ID</td>
+								<td>
+									<input type="text" name="id" autocomplete="off" required />
+								</td>
+							</tr>
+							<tr>
+								<td>비밀번호</td>
+								<td>
+									<input type="password" name="password" autocomplete="off" required />
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<button type="submit">로그인</button>
+									<button type="button" onclick="document.querySelector('dialog').close()">
+										닫기
+									</button>
+								</td>
+							</tr>
+						</table>
+					</form>
+				</dialog>
 				<% } %>
 			</article>
 		</main>
