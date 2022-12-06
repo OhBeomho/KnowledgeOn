@@ -204,4 +204,4 @@ app.post("/answer/:id", (req, res) => {
 		})
 })
 
-server.listen(PORT, () => console.log("Server started. PORT: " + PORT))
+server.listen(PORT, () => console.log(`[${new Date().toLocaleTimeString("en-US")}]: Server started on port ${PORT}`))
